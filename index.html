@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joaquin Barbetta — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --bg:         #FAFAFA;
+      --surface:    #F2F2EF;
+      --border:     #E2E2DC;
+      --text:       #111111;
+      --muted:      #666666;
+      --hint:       #999999;
+      --accent:     #2A52D4;
+      --accent-bg:  #EEF1FB;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:         #0E0E0E;
+        --surface:    #191919;
+        --border:     #2C2C2C;
+        --text:       #EFEFEF;
+        --muted:      #999999;
+        --hint:       #555555;
+        --accent:     #6B8EFF;
+        --accent-bg:  #131829;
+      }
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 500;
+      color: var(--text); text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-links a {
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      padding: 6px 10px; border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--surface); }
+    .nav-cv {
+      font-size: 13px !important; font-weight: 500;
+      color: var(--text) !important;
+      border: 1px solid var(--border); border-radius: 7px;
+      padding: 6px 13px !important; margin-left: 10px;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .nav-cv:hover {
+      background: var(--surface) !important;
+      border-color: var(--muted) !important;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 760px; margin: 0 auto; padding: 0 40px; }
+    section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px; font-weight: 500; letter-spacing: .13em;
+      text-transform: uppercase; color: var(--hint); margin-bottom: 28px;
+    }
+
+    /* ── HERO ── */
+    #hero { padding: 96px 0 80px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 4px 13px; margin-bottom: 28px;
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #22c55e; display: inline-block; flex-shrink: 0;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(44px, 7.5vw, 68px);
+      font-weight: 600; line-height: 1.0; letter-spacing: -0.03em;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .hero-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(15px, 2.2vw, 19px); font-weight: 400;
+      color: var(--muted); margin-bottom: 22px;
+    }
+    .hero-bio {
+      font-size: 15px; color: var(--muted);
+      max-width: 480px; line-height: 1.75; margin-bottom: 36px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+
+    /* ── BUTTONS ── */
+    .btn-primary, .btn-secondary {
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+      padding: 10px 20px; border-radius: 8px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary {
+      background: var(--text); color: var(--bg); border: none;
+      transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: .8; }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+      transition: background .15s, border-color .15s;
+    }
+    .btn-secondary:hover { background: var(--surface); border-color: var(--muted); }
+
+    .hero-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .hero-meta-item { font-size: 12px; color: var(--hint); display: flex; align-items: center; gap: 5px; }
+    .sep { color: var(--border); }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: border-color .15s, transform .15s;
+    }
+    .project-card:hover { border-color: var(--muted); transform: translateY(-1px); }
+    .project-card-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 8px;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 500; color: var(--text);
+    }
+    .project-link-icon { color: var(--hint); flex-shrink: 0; transition: color .15s; }
+    .project-card:hover .project-link-icon { color: var(--accent); }
+    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.55; flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+      color: var(--muted); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px;
+    }
+
+    /* ── ABOUT ── */
+    .about-content { display: grid; grid-template-columns: 64px 1fr; gap: 28px; align-items: start; }
+    .about-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px; font-weight: 500; color: var(--muted); flex-shrink: 0;
+    }
+    .about-bio { font-size: 15px; color: var(--muted); line-height: 1.75; margin-bottom: 24px; }
+    .exp-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 12px; padding: 12px 0; border-top: 1px solid var(--border);
+    }
+    .exp-row:last-child { border-bottom: 1px solid var(--border); }
+    .exp-company { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 500; color: var(--text); }
+    .exp-role { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .exp-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--hint); white-space: nowrap; flex-shrink: 0; }
+
+    /* ── STACK ── */
+    .stack-group { margin-bottom: 20px; }
+    .stack-group:last-child { margin-bottom: 0; }
+    .stack-group-label {
+      font-size: 11px; font-weight: 500; letter-spacing: .09em;
+      text-transform: uppercase; color: var(--hint); margin-bottom: 10px;
+    }
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .stack-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--muted); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px;
+    }
+
+    /* ── CERTS ── */
+    .certs { margin-top: 36px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .cert-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .cert-item:last-child { margin-bottom: 0; }
+    .cert-badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+      background: var(--accent-bg); color: var(--accent);
+    }
+    .cert-name { font-size: 13px; color: var(--text); }
+    .cert-desc { font-size: 12px; color: var(--hint); margin-top: 2px; }
+
+    /* ── CONTACT ── */
+    .contact-desc {
+      font-size: 15px; color: var(--muted);
+      max-width: 400px; line-height: 1.75; margin-bottom: 28px;
+    }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--muted); text-decoration: none;
+      border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px;
+      transition: color .15s, border-color .15s, background .15s;
+    }
+    .contact-link:hover { color: var(--text); border-color: var(--muted); background: var(--surface); }
+
+    /* ── FOOTER ── */
+    footer { padding: 36px 0; text-align: center; font-size: 12px; color: var(--hint); }
+
+    /* ── INLINE ICONS ── */
+    .ico { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; flex-shrink: 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 620px) {
+      nav { padding: 0 20px; }
+      .nav-hide { display: none; }
+      .container { padding: 0 20px; }
+      #hero { padding: 60px 0 56px; }
+      section { padding: 56px 0; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .about-content { grid-template-columns: 1fr; }
+      .about-avatar { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, html { transition: none !important; scroll-behavior: auto !important; }
+    }
+
+    /* ── PULSE DOT ── */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.35); }
+    }
+    .dot { animation: pulse-dot 2.4s ease-in-out infinite; }
+
+    /* ── FADE-IN ON SCROLL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .45s ease, transform .45s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── PROJECT CARD HOVER SHADOW ── */
+    .project-card {
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .project-card:hover {
+      box-shadow: 0 4px 16px color-mix(in srgb, var(--text) 7%, transparent);
+    }
+
+    /* ── COMING SOON BADGE ── */
+    .project-soon {
+      font-size: 11px;
+      color: var(--hint);
+      margin-top: 4px;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Joaquin Barbetta</a>
+  <div class="nav-links">
+    <a href="#proyectos" class="nav-hide">Proyectos</a>
+    <a href="#sobre-mi" class="nav-hide">Sobre mí</a>
+    <a href="#stack" class="nav-hide">Stack</a>
+    <a href="#contacto" class="nav-hide">Contacto</a>
+    <a href="CV%20Joaquin%20Barbetta.pdf" download class="nav-cv">
+      <svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M7 1v8M4.5 6.5L7 9l2.5-2.5M1.5 10.5v1a1 1 0 001 1h9a1 1 0 001-1v-1"/>
+      </svg>
+      CV
+    </a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-badge"><span class="dot"></span>Disponible para proyectos</div>
+    <h1>Joaquin<br>Barbetta</h1>
+    <p class="hero-role">Front-End Developer &amp; Digital Analyst</p>
+    <p class="hero-bio">
+      Estudiante de Gestión de TI (UADE) con perfil técnico híbrido.
+      Desarrollo web, automatización con Python y marketing digital a escala.
+      Actualmente en Synapsis.
+    </p>
+    <div class="hero-actions">
+      <a href="CV%20Joaquin%20Barbetta.pdf" download class="btn-primary">
+        <svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M7 1v8M4.5 6.5L7 9l2.5-2.5M1.5 10.5v1a1 1 0 001 1h9a1 1 0 001-1v-1"/>
+        </svg>
+        Descargar CV
+      </a>
+      <a href="#proyectos" class="btn-secondary">Ver proyectos →</a>
+    </div>
+    <div class="hero-meta">
+      <span class="hero-meta-item">
+        <svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M7 1C5 1 3.5 2.5 3.5 4.5c0 2.5 3.5 7.5 3.5 7.5s3.5-5 3.5-7.5C10.5 2.5 9 1 7 1z"/>
+          <circle cx="7" cy="4.5" r="1.2"/>
+        </svg>
+        Buenos Aires
+      </span>
+      <span class="sep">·</span>
+      <span class="hero-meta-item">UADE</span>
+      <span class="sep">·</span>
+      <span class="hero-meta-item">Synapsis</span>
+    </div>
+  </section>
+
+  <!-- ── PROYECTOS ── -->
+  <section id="proyectos">
+    <p class="section-label">Proyectos</p>
+    <div class="projects-grid">
+
+      <a href="http://abretesesamocomidas.com.ar/nuevo/index.php" target="_blank" rel="noopener" class="project-card">
+        <div class="project-card-header">
+          <span class="project-title">Abre Sésamo</span>
+          <svg class="ico project-link-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 2h4v4M12 2L6 8M5 3H3a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V9"/>
+          </svg>
+        </div>
+        <p class="project-desc">Rediseño completo del sitio web de un restaurante: nueva estructura visual, menú actualizado y navegación mejorada.</p>
+        <div class="project-tags">
+          <span class="tag">PHP</span><span class="tag">HTML</span><span class="tag">CSS</span>
+        </div>
+      </a>
+
+      <a href="https://www.rgpumps.com.ar/rgtech" target="_blank" rel="noopener" class="project-card">
+        <div class="project-card-header">
+          <span class="project-title">RG TECH — RG Pumps</span>
+          <svg class="ico project-link-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 2h4v4M12 2L6 8M5 3H3a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V9"/>
+          </svg>
+        </div>
+        <p class="project-desc">Desarrollo del módulo "RG TECH" integrado en el sitio corporativo de una empresa de bombas industriales.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span><span class="tag">PHP</span><span class="tag">DNS</span>
+        </div>
+      </a>
+
+      <a href="https://barbafifardo.netlify.app/" target="_blank" rel="noopener" class="project-card">
+        <div class="project-card-header">
+          <span class="project-title">BarbeaFifardo</span>
+          <svg class="ico project-link-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 2h4v4M12 2L6 8M5 3H3a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V9"/>
+          </svg>
+        </div>
+        <p class="project-desc">Aplicación web para seguimiento de puntos en torneos de FIFA, con sorteo de equipos y módulo de estadísticas.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Netlify</span>
+        </div>
+      </a>
+
+      <div class="project-card">
+        <div class="project-card-header">
+          <span class="project-title">Image-to-SVG Converter</span>
+        </div>
+        <p class="project-desc">Script Python para vectorización automática de imágenes PNG/JPG a SVG mediante detección de contornos y jerarquía de formas.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">svgwrite</span>
+        </div>
+        <p class="project-soon">Repositorio próximamente</p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-header">
+          <span class="project-title">Python CRM</span>
+        </div>
+        <p class="project-desc">Sistema modular de gestión empresarial con módulos de clientes, ventas, productos, agenda y reportes. Python puro, sin dependencias externas.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">CSV</span><span class="tag">modular</span>
+        </div>
+        <p class="project-soon">Repositorio próximamente</p>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-header">
+          <span class="project-title">Testing Project</span>
+        </div>
+        <p class="project-desc">Pruebas manuales para aplicaciones de login: validación de autenticación, manejo de errores y documentación de casos de prueba.</p>
+        <div class="project-tags">
+          <span class="tag">QA</span><span class="tag">manual testing</span><span class="tag">documentación</span>
+        </div>
+        <p class="project-soon">Repositorio próximamente</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SOBRE MÍ ── -->
+  <section id="sobre-mi">
+    <p class="section-label">Sobre mí</p>
+    <div class="about-content">
+      <div class="about-avatar">JB</div>
+      <div>
+        <p class="about-bio">
+          Estudiante de Licenciatura en Gestión de Tecnología de la Información en UADE, con perfil técnico híbrido orientado al desarrollo web, automatización y marketing digital.
+          Trabajo en Synapsis como Front-End Developer &amp; Digital Analyst: gestión de infraestructura web (PHP/HTML, DNS), campañas masivas de email para más de 71.000 clientes y soporte técnico en eventos corporativos.
+          Me interesa construir herramientas que resuelvan problemas concretos.
+        </p>
+        <div>
+          <div class="exp-row">
+            <div>
+              <div class="exp-company">Synapsis</div>
+              <div class="exp-role">Front-End Developer &amp; Digital Analyst</div>
+            </div>
+            <span class="exp-date">2025 — act.</span>
+          </div>
+          <div class="exp-row">
+            <div>
+              <div class="exp-company">UADE</div>
+              <div class="exp-role">Lic. Gestión de Tecnología de la Información</div>
+            </div>
+            <span class="exp-date">2025 — 2028</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STACK ── -->
+  <section id="stack">
+    <p class="section-label">Stack técnico</p>
+
+    <div class="stack-group">
+      <div class="stack-group-label">Desarrollo</div>
+      <div class="stack-tags">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">PHP</span>
+      </div>
+    </div>
+
+    <div class="stack-group">
+      <div class="stack-group-label">Plataformas &amp; CMS</div>
+      <div class="stack-tags">
+        <span class="stack-tag">WordPress</span>
+        <span class="stack-tag">Netlify</span>
+        <span class="stack-tag">Synapsis Mail</span>
+      </div>
+    </div>
+
+    <div class="stack-group">
+      <div class="stack-group-label">Diseño &amp; gestión</div>
+      <div class="stack-tags">
+        <span class="stack-tag">Figma</span>
+        <span class="stack-tag">Canva</span>
+        <span class="stack-tag">Trello</span>
+        <span class="stack-tag">Google Workspace</span>
+        <span class="stack-tag">Microsoft Office</span>
+      </div>
+    </div>
+
+    <div class="stack-group">
+      <div class="stack-group-label">IA &amp; herramientas</div>
+      <div class="stack-tags">
+        <span class="stack-tag">ChatGPT</span>
+        <span class="stack-tag">Claude</span>
+        <span class="stack-tag">Gemini</span>
+      </div>
+    </div>
+
+    <div class="certs">
+      <div class="stack-group-label" style="margin-bottom:16px;">Certificaciones</div>
+      <div class="cert-item">
+        <span class="cert-badge">C1</span>
+        <div>
+          <div class="cert-name">Cambridge English: Advanced (CAE)</div>
+          <div class="cert-desc">Nivel C1 — Avanzado profesional</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <span class="cert-badge">B2</span>
+        <div>
+          <div class="cert-name">Cambridge English: First (FCE)</div>
+          <div class="cert-desc">Nivel B2</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <span class="cert-badge" style="background:var(--surface);color:var(--muted);">IGCSE</span>
+        <div>
+          <div class="cert-name">IGCSE Business Studies</div>
+          <div class="cert-desc">University of Cambridge</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACTO ── -->
+  <section id="contacto">
+    <p class="section-label">Contacto</p>
+    <p class="contact-desc">Abierto a oportunidades, proyectos freelance o simplemente una conversación técnica.</p>
+    <div class="contact-links">
+      <a href="mailto:joaquinbarbetta07@gmail.com" class="contact-link">
+        <svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="1" y="3" width="12" height="9" rx="2"/>
+          <path d="M1 5l6 4 6-4"/>
+        </svg>
+        joaquinbarbetta07@gmail.com
+      </a>
+      <!-- Actualizá el href con tu URL real de LinkedIn -->
+      <a href="https://www.linkedin.com/in/joaquinbarbetta" target="_blank" rel="noopener" class="contact-link">
+        <svg class="ico" viewBox="0 0 14 14" fill="currentColor">
+          <path d="M3 5H1.5v7H3V5zm-.75-1.25a.75.75 0 110-1.5.75.75 0 010 1.5zM12.5 7.5C12.5 6.1 11.4 5 10 5c-.8 0-1.5.4-2 1V5H6.5v7H8V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V12H12.5V7.5z"/>
+        </svg>
+        LinkedIn
+      </a>
+      <!-- Actualizá el href con tu URL real de GitHub -->
+      <a href="https://github.com/joaquinbarbetta" target="_blank" rel="noopener" class="contact-link">
+        <svg class="ico" viewBox="0 0 14 14" fill="currentColor">
+          <path d="M7 0C3.13 0 0 3.13 0 7c0 3.1 2.01 5.72 4.79 6.65.35.06.48-.15.48-.34 0-.17-.01-.71-.01-1.31-1.76.32-2.22-.43-2.36-.82-.08-.2-.42-.82-.72-.99-.24-.13-.59-.45 0-.46.55 0 .94.51 1.07.72.63 1.06 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.56-.18-3.19-.78-3.19-3.46 0-.77.27-1.4.72-1.89-.07-.18-.31-.9.07-1.86 0 0 .58-.19 1.92.72A6.7 6.7 0 017 3.27c.59 0 1.19.08 1.75.24 1.34-.91 1.92-.72 1.92-.72.38.96.14 1.68.07 1.86.45.49.72 1.11.72 1.89 0 2.69-1.64 3.28-3.2 3.46.25.22.47.64.47 1.29 0 .93-.01 1.69-.01 1.92 0 .19.13.41.48.34A7.002 7.002 0 0014 7 7 7 0 007 0z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="tel:+541123958920" class="contact-link">
+        <svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 2.5C2 2 2.5 1.5 3 1.5h2l1 3-1.5 1a8 8 0 003 3l1-1.5 3 1v2c0 .5-.5 1-1 1C5 12.5 1.5 9 2 2.5z"/>
+        </svg>
+        +54 11 2395 8920
+      </a>
+      <a href="CV%20Joaquin%20Barbetta.pdf" download class="contact-link">
+        <svg class="ico" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M7 1v8M4.5 6.5L7 9l2.5-2.5M1.5 10.5v1a1 1 0 001 1h9a1 1 0 001-1v-1"/>
+        </svg>
+        Descargar CV
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    Joaquin Barbetta · Buenos Aires · 2026
+  </div>
+</footer>
+
+<script>
+  // Nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const links    = document.querySelectorAll('.nav-links a[href^="#"]');
+  const navIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(l => {
+        const active = l.getAttribute('href') === '#' + e.target.id;
+        l.style.color      = active ? 'var(--text)' : '';
+        l.style.fontWeight = active ? '500'         : '';
+      });
+    });
+  }, { threshold: 0.45 });
+  sections.forEach(s => navIO.observe(s));
+
+  // Fade-in on scroll
+  const revealTargets = document.querySelectorAll('section, .project-card');
+  revealTargets.forEach(el => el.classList.add('reveal'));
+  const revealIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revealTargets.forEach(el => revealIO.observe(el));
+</script>
+
+</body>
+</html>
