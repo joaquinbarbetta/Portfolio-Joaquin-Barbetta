@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"C:\\\\Users\\\\joaqu\\\\OneDrive\\\\Documents\\\\PORTFOLIO\\\\\" 2>/dev/null || dir \"C:\\\\Users\\\\joaqu\\\\OneDrive\\\\Documents\\\\PORTFOLIO\\\\\")"
+    ]
+  }
+}
